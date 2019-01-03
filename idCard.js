@@ -151,7 +151,7 @@ module.exports = {
   sex: sex,
   address: address,
   nong: Nong,
-  all: (idCard) => {
+  all: function(idCard) {
     return {
       endNum: idCardEndNum(idCard),
       birthDay: birthDay(idCard),
