@@ -51,26 +51,11 @@ module.exports = {
 	},
 
 	output: {
-		filename: 'index.js'
+		filename: 'index.js',
+    libraryTarget: "commonjs2"
 	},
 
-	mode: 'development',
-
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				vendors: {
-					priority: -10,
-					test: /[\\/]node_modules[\\/]/
-				}
-			},
-
-			chunks: 'async',
-			minChunks: 1,
-			minSize: 30000,
-			name: true
-		}
-	},
+	mode: 'production',
 
   plugins: [
     new CleanWebpackPlugin([path.resolve(__dirname, 'dist')])
