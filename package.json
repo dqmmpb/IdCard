@@ -2,14 +2,31 @@
   "name": "js-idcard",
   "version": "1.0.6",
   "description": "身份证解析",
-  "main": "idCard.js",
+  "main": "src/idCard.js",
   "dependencies": {
     "chinese-lunar": "^0.1.4",
     "node-constellation": "^0.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.2",
+    "husky": "^1.3.1",
+    "mocha": "^5.2.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive",
+    "lint": "eslint --ext .js src",
+    "lintfix": "eslint --fix --ext .js src"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "repository": {
     "type": "git",
