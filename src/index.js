@@ -145,7 +145,7 @@ function birthDay(idCard) {
 // 验证身份证号是否正确
 function checkIdCard(idCard) {
   const card = String(idCard);
-  if (/(^\d{18}$)/.test(card) && idCardEndNum(card) === card[17].toUpperCase()) {
+  if (/(^\d{18}$)/.test(card) && String(idCardEndNum(card)) === card[17].toUpperCase()) {
     return true;
   }
   return false;
@@ -221,8 +221,3 @@ module.exports = {
   leftPad,
   rightPad,
 };
-
-
-// console.log(num15to18('411403960314001'))
-
-// console.log(checkIdCard('411403199603140010'))

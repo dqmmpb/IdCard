@@ -2,26 +2,36 @@
   "name": "js-idcard",
   "version": "1.0.6",
   "description": "身份证解析",
-  "main": "src/idCard.js",
+  "main": "dist/index.js",
   "dependencies": {
     "chinese-lunar": "^0.1.4",
     "node-constellation": "^0.0.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "chai": "^4.2.0",
+    "clean-webpack-plugin": "^1.0.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.11.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.2",
     "husky": "^1.3.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0"
   },
   "scripts": {
-    "test": "mocha --recursive",
     "lint": "eslint --ext .js src",
-    "lintfix": "eslint --fix --ext .js src"
+    "lintfix": "eslint --fix --ext .js src",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "test": "mocha --recursive"
   },
   "husky": {
     "hooks": {
