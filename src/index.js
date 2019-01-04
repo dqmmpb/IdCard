@@ -99,7 +99,15 @@ function leftPad(val, num, pad) {
   return padding + str;
 }
 
-// 右补位
+/**
+ * 右补位
+ * @param val 待补位字符串
+ * @param num 补位后字符串长度
+ * @param pad 补位字符，默认使用'0'进行补位；支持多字符补位
+ *            例如：
+ *            1. rightPad('123', 10, 'A') => '123AAAAAAA'
+ * @returns {string}
+ */
 function rightPad(val, num, pad) {
   const str = String(val);
   const padStr = (!nullOrUndefined(pad) && String(pad).length >= 0)
@@ -123,7 +131,11 @@ function rightPad(val, num, pad) {
   return str + padding;
 }
 
-// 农历转换
+/**
+ * 农历转换
+ * @param birthday
+ * @returns {string}
+ */
 function solarToLunar(birthday) {
   try {
     const lunar = chineseLunar.solarToLunar(new Date(birthday));
@@ -133,7 +145,20 @@ function solarToLunar(birthday) {
   }
 }
 
-// 解析生日信息
+/**
+ * 解析生日信息
+ * @param idCard
+ * @returns {{
+ *    date: string,
+ *    lunar: string,
+ *    year: string,
+ *    month: string,
+ *    day: string,
+ *    week: *,
+ *    zodiac: *,
+ *    zodiac_zh: *
+ *  }}
+ */
 function birthDay(idCard) {
   const card = String(idCard);
   const year = card.substr(6, 4);
@@ -154,7 +179,11 @@ function birthDay(idCard) {
   };
 }
 
-// 验证身份证号是否正确
+/**
+ * 验证身份证号是否正确
+ * @param idCard
+ * @returns {boolean}
+ */
 function checkIdCard(idCard) {
   const card = String(idCard);
   if (/(^\d{18}$)/.test(card) && String(endNum(card)) === card[17].toUpperCase()) {
@@ -163,7 +192,11 @@ function checkIdCard(idCard) {
   return false;
 }
 
-// 补全身份证号
+/**
+ * 补全身份证号
+ * @param idCard
+ * @returns {string}
+ */
 function repairIdCard(idCard) {
   const card = String(idCard);
   if (/(^\d{17}$)/.test(card)) {
@@ -175,7 +208,11 @@ function repairIdCard(idCard) {
   return card;
 }
 
-// 15位转换18位
+/**
+ * 15位转换18位
+ * @param idCard
+ * @returns {string}
+ */
 function num15to18(idCard) {
   const card = String(idCard);
   if (/(^\d{15}$)/.test(card)) {
@@ -184,29 +221,42 @@ function num15to18(idCard) {
   return repairIdCard(card);
 }
 
-// 地址信息解析
+/**
+ * 地址信息解析
+ * @param idCard
+ * @returns {{address, province, city, area, all: string}}
+ */
 function address(idCard) {
   const card = String(idCard);
   const addressId = card.slice(0, 6);
   const data = dataAddress[addressId];
-  if (nullOrUndefined(data)) {
-    return data;
+  if (!nullOrUndefined(data)) {
+    const all = [];
+    if (data.province !== '无') {
+      all.push(data.province);
+    }
+    if (data.city !== '无') {
+      all.push(data.city);
+    }
+    if (data.area !== '无') {
+      all.push(data.area);
+    }
+    return {
+      address: data.address,
+      province: data.province,
+      city: data.city,
+      area: data.area,
+      all: all.join('-'),
+    };
   }
-  data.all = (`${data.province}-${data.city}-${data.area}`).replace('无', '');
   return data;
 }
 
-/* 地址信息返回格式
-{
-  "address": "地址",
-  "province": "省/直辖市",
-  "city": "市",
-  "area": "县/区",
-  "all": "省-市-县"
-}
-*/
-
-// 性别解析
+/**
+ * 性别解析
+ * @param idCard
+ * @returns {string}
+ */
 function sex(idCard) {
   const card = String(idCard);
   if (card[16] % 2) return '男';
