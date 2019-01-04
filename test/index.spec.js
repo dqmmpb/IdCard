@@ -15,6 +15,9 @@ describe('补位测试', function() {
     it('leftPad(\'123\', 10, \'abc\') => \'cabcabc123\'', function () {
       expect(idCard.leftPad('123', 10, 'abc')).to.be.equal('cabcabc123');
     });
+    it('leftPad(\'123\', 10, \'\u1234\') => \'\u1234\u1234\u1234\u1234\u1234\u1234\u1234123\'', function () {
+      expect(idCard.leftPad('123', 10, '\u1234')).to.be.equal('\u1234\u1234\u1234\u1234\u1234\u1234\u1234123');
+    });
     it('leftPad(\'123456789\', 5, \'\') => \'123456789\'', function () {
       expect(idCard.leftPad('123456789', 5, '')).to.be.equal('123456789');
     });
@@ -35,6 +38,9 @@ describe('补位测试', function() {
     });
     it('rightPad(\'123\', 10, \'abc\') => \'123abcabca\'', function () {
       expect(idCard.rightPad('123', 10, 'abc')).to.be.equal('123abcabca');
+    });
+    it('rightPad(\'123\', 10, \'\u1234\') => \'123\u1234\u1234\u1234\u1234\u1234\u1234\u1234\'', function () {
+      expect(idCard.rightPad('123', 10, '\u1234')).to.be.equal('123\u1234\u1234\u1234\u1234\u1234\u1234\u1234');
     });
     it('rightPad(\'123456789\', 5, \'\') => \'123456789\'', function () {
       expect(idCard.rightPad('123456789', 5, '')).to.be.equal('123456789');
