@@ -15,7 +15,7 @@ var IdCard = require('js-idcard')
 
 ## 方法列表
 ----
-### IdCard.EndNum(IdCard)
+### IdCard.endNum(IdCard)
 返回根据前17位数算出来的第18位
 
 ##### 参数说明
@@ -118,9 +118,9 @@ var IdCard = require('js-idcard')
 ```json
 {
   "address": "地址",
-  "provinces": "省/直辖市",
-  "citiy": "市",
-  "areas": "县/区",
+  "province": "省/直辖市",
+  "city": "市",
+  "area": "县/区",
   "all": "省-市-县"
 }
 
@@ -151,9 +151,9 @@ var IdCard = require('js-idcard')
   checkIdCard: true,
   address: {
     address: '北京市平谷县',
-    provinces: '北京市',
-    citiy: '无',
-    areas: '平谷县',
+    province: '北京市',
+    city: '无',
+    area: '平谷县',
     all: '北京市--平谷县'
   },
   sex: '男'

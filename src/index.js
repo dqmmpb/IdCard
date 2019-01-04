@@ -46,8 +46,12 @@ const dict = {
   },
 };
 
-// 计算最后一位应该是多少
-function idCardEndNum(idCard) {
+/**
+ * 计算最后一位应该是多少
+ * @param idCard 身份证号
+ * @returns {*}
+ */
+function endNum(idCard) {
   const card = String(idCard);
   const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
   const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
@@ -63,12 +67,20 @@ function idCardEndNum(idCard) {
   return last;
 }
 
-// 左补位
+/**
+ * 左补位
+ * @param val 待补位字符串
+ * @param num 补位后字符串长度
+ * @param pad 补位字符，默认使用'0'进行补位；支持多字符补位
+ *            例如：
+ *            1. leftPad('123', 10, 'A') => 'AAAAAAA123'
+ * @returns {string}
+ */
 function leftPad(val, num, pad) {
   const str = String(val);
-  const padStr = String(pad).length > 0
+  const padStr = (!nullOrUndefined(pad) && String(pad).length >= 0)
     ? String(pad)
-    : ' ';
+    : '0';
   let padding = '';
   let diff = num - str.length;
 
@@ -81,7 +93,7 @@ function leftPad(val, num, pad) {
         padding = padStr + padding;
       }
       diff -= padLen;
-    } while (diff > 0);
+    } while (diff > 0 && padLen > 0);
   }
 
   return padding + str;
@@ -90,9 +102,9 @@ function leftPad(val, num, pad) {
 // 右补位
 function rightPad(val, num, pad) {
   const str = String(val);
-  const padStr = String(pad).length > 0
+  const padStr = (!nullOrUndefined(pad) && String(pad).length >= 0)
     ? String(pad)
-    : ' ';
+    : '0';
   let padding = '';
   let diff = num - str.length;
 
@@ -105,14 +117,14 @@ function rightPad(val, num, pad) {
         padding += padStr;
       }
       diff -= padLen;
-    } while (diff > 0);
+    } while (diff > 0 && padLen > 0);
   }
 
   return str + padding;
 }
 
 // 农历转换
-function Lunar(birthday) {
+function solarToLunar(birthday) {
   try {
     const lunar = chineseLunar.solarToLunar(new Date(birthday));
     return `${lunar.year}/${leftPad(lunar.month, 2, '0')}/${leftPad(lunar.day, 2, '0')}`;
@@ -128,7 +140,7 @@ function birthDay(idCard) {
   const month = card.substr(10, 2);
   const day = card.substr(12, 2);
   const birthday = `${year}/${month}/${day}`;
-  const lunar = Lunar(birthday);
+  const lunar = solarToLunar(birthday);
   const lunaryear = lunar.substr(0, 4);
   return {
     date: birthday,
@@ -145,7 +157,7 @@ function birthDay(idCard) {
 // 验证身份证号是否正确
 function checkIdCard(idCard) {
   const card = String(idCard);
-  if (/(^\d{18}$)/.test(card) && String(idCardEndNum(card)) === card[17].toUpperCase()) {
+  if (/(^\d{18}$)/.test(card) && String(endNum(card)) === card[17].toUpperCase()) {
     return true;
   }
   return false;
@@ -155,10 +167,10 @@ function checkIdCard(idCard) {
 function repairIdCard(idCard) {
   const card = String(idCard);
   if (/(^\d{17}$)/.test(card)) {
-    return card + idCardEndNum(card);
+    return card + endNum(card);
   }
   if (/(^\d{18}$)/.test(card)) {
-    return card.slice(0, 17) + idCardEndNum(card);
+    return card.slice(0, 17) + endNum(card);
   }
   return card;
 }
@@ -180,16 +192,16 @@ function address(idCard) {
   if (nullOrUndefined(data)) {
     return data;
   }
-  data.all = (`${data.provinces}-${data.citiy}-${data.areas}`).replace('无', '');
+  data.all = (`${data.province}-${data.city}-${data.area}`).replace('无', '');
   return data;
 }
 
 /* 地址信息返回格式
 {
   "address": "地址",
-  "provinces": "省/直辖市",
-  "citiy": "市",
-  "areas": "县/区",
+  "province": "省/直辖市",
+  "city": "市",
+  "area": "县/区",
   "all": "省-市-县"
 }
 */
@@ -202,7 +214,7 @@ function sex(idCard) {
 }
 
 module.exports = {
-  endNum: idCardEndNum,
+  endNum,
   birthDay,
   checkIdCard,
   repairIdCard,
@@ -211,11 +223,11 @@ module.exports = {
   address,
   all(idCard) {
     return {
-      endNum: idCardEndNum(idCard),
+      endNum: endNum(idCard),
       birthDay: birthDay(idCard),
       checkIdCard: checkIdCard(idCard),
-      address: address(idCard),
       sex: sex(idCard),
+      address: address(idCard),
     };
   },
   leftPad,
