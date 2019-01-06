@@ -1,56 +1,6 @@
 const idCard = require('../src/index');
 const expect = require('chai').expect;
 
-describe('补位测试', function () {
-  describe('#leftPad()', function () {
-    it('leftPad(\'123\', 10) => \'0000000123\'', function () {
-      expect(idCard.leftPad('123', 10)).to.be.equal('0000000123');
-    });
-    it('leftPad(\'123\', 10, \'\') => \'123\'', function () {
-      expect(idCard.leftPad('123', 10, '')).to.be.equal('123');
-    });
-    it('leftPad(\'123\', 10, \' \') => \'       123\'', function () {
-      expect(idCard.leftPad('123', 10, ' ')).to.be.equal('       123');
-    });
-    it('leftPad(\'123\', 10, \'abc\') => \'cabcabc123\'', function () {
-      expect(idCard.leftPad('123', 10, 'abc')).to.be.equal('cabcabc123');
-    });
-    it('leftPad(\'123\', 10, \'\u1234\') => \'\u1234\u1234\u1234\u1234\u1234\u1234\u1234123\'', function () {
-      expect(idCard.leftPad('123', 10, '\u1234')).to.be.equal('\u1234\u1234\u1234\u1234\u1234\u1234\u1234123');
-    });
-    it('leftPad(\'123456789\', 5, \'\') => \'123456789\'', function () {
-      expect(idCard.leftPad('123456789', 5, '')).to.be.equal('123456789');
-    });
-    it('leftPad(\'123456789\', 5, \' \') => \'123456789\'', function () {
-      expect(idCard.leftPad('123456789', 5, ' ')).to.be.equal('123456789');
-    });
-  });
-
-  describe('#rightPad()', function () {
-    it('rightPad(\'123\', 10) => \'1230000000\'', function () {
-      expect(idCard.rightPad('123', 10)).to.be.equal('1230000000');
-    });
-    it('rightPad(\'123\', 10, \'\') => \'123\'', function () {
-      expect(idCard.rightPad('123', 10, '')).to.be.equal('123');
-    });
-    it('rightPad(\'123\', 10, \' \') => \'       123\'', function () {
-      expect(idCard.rightPad('123', 10, ' ')).to.be.equal('123       ');
-    });
-    it('rightPad(\'123\', 10, \'abc\') => \'123abcabca\'', function () {
-      expect(idCard.rightPad('123', 10, 'abc')).to.be.equal('123abcabca');
-    });
-    it('rightPad(\'123\', 10, \'\u1234\') => \'123\u1234\u1234\u1234\u1234\u1234\u1234\u1234\'', function () {
-      expect(idCard.rightPad('123', 10, '\u1234')).to.be.equal('123\u1234\u1234\u1234\u1234\u1234\u1234\u1234');
-    });
-    it('rightPad(\'123456789\', 5, \'\') => \'123456789\'', function () {
-      expect(idCard.rightPad('123456789', 5, '')).to.be.equal('123456789');
-    });
-    it('rightPad(\'123456789\', 5, \' \') => \'123456789\'', function () {
-      expect(idCard.rightPad('123456789', 5, ' ')).to.be.equal('123456789');
-    });
-  });
-});
-
 describe('身份证验证测试', function () {
   describe('#endNum()', function () {
     it('11022619850127211 的最后1位为 6', function () {
